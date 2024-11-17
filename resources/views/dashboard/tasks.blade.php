@@ -20,6 +20,15 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
 
+
+                <div class="card mb-5">
+                    <div class="cardHeader">
+                        <h3>Total Tasks </h3>
+                        <span class="badge bg-primary" style="font-size:20px;">{{ $tasks->count()}}</span>
+                    </div>
+                </div>
+
+
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
