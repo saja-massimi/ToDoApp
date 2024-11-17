@@ -1,21 +1,22 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
+});
+
+Route::controller(TaskController::class)->middleware('auth')->name('tasks')->group(function () {
+    Route::get('/tasks', 'index')->name('.index');
+    Route::get('/tasks/create', 'create')->name('.create');
+    Route::post('/tasks', 'store')->name('.store');
+    Route::get('/tasks/{task}', 'show')->name('.show');
+    Route::get('/tasks/{task}/edit', 'edit')->name('.edit');
+    Route::put('/tasks/{task}', 'update')->name('.update');
+    Route::delete('/tasks/{task}', 'destroy')->name('.destroy');
 });
 
 Route::get('/dashboard', function () {
@@ -28,4 +29,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
