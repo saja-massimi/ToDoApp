@@ -15,5 +15,10 @@ class Task extends Model
         'description',
         'status',
     ];
+
+    protected $casts = [
+        'due_date' => 'datetime',
+    ];
+
     use HasFactory;
 }

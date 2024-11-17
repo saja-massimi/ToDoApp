@@ -24,28 +24,41 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col">Task</th>
+                            <th scope="col">Priority</th>
+                            <th scope="col">Due Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" colspan="2" class="center">Actions</th>
                         </tr>
-
                     </thead>
                     <tbody>
 
-                        @foreach ($users as $user)
+                        @foreach ($tasks as $task)
 
                         <tr>
-                            <th scope="row">{{$user->id}}</th>
-                            <td>{{$user->name}}</td>
+                            <th scope="row">{{$task->task_id}}</th>
+                            <td>{{$task->title}}</td>
+                            <td>{{$task->priority}}</td>
+                            <td>{{$task->due_date}}</td>
+                            <td>{{ $task->status ? 'Completed' : 'In Progress' }}</td>
+
+
+                            <td><a href="{{ route('tasks.edit', $task->task_id) }}" class="btn btn-primary">Edit</a></td>
+
+
                             <td>
-                                <a href="{{route('dashboard.userTasks', $user->id) }}" class="btn btn-primary">View All Tasks</a>
+                                <form method="POST" action="{{ route('tasks.destroy' , $task->task_id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a href="{{ route('tasks.destroy', $task->task_id) }}" class="btn btn-danger" onclick="event.preventDefault();
+                                                this.closest('form').submit();">Delete</a>
+                                </form>
                             </td>
+
                         </tr>
-
                         @endforeach
-
                     </tbody>
                 </table>
-
 
 
             </div>

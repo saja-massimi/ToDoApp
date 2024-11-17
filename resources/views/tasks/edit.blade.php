@@ -38,8 +38,6 @@
     <!-- Create Task Form -->
     <div class="container">
         <h1>Edit Task</h1>
-
-
         <form method="POST" action="{{ route('tasks.update', $task->task_id) }}">
             @csrf
             @method('PUT')
@@ -63,9 +61,10 @@
                     class="form-control"
                     id="due_date"
                     name="due_date"
-                    value="{{ old('due_date', $task->due_date) }}"
+                    value="{{ old('due_date', $task->due_date ? $task->due_date->format('Y-m-d') : '') }}"
                     required>
             </div>
+
 
 
             <div class="form-group">

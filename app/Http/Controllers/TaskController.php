@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class TaskController extends Controller
 {
@@ -14,7 +15,8 @@ class TaskController extends Controller
 
             $userRole = Auth::user()->role;
             if ($userRole == 'admin') {
-                return view('dashboard');
+                $users = User::where('role', 'user')->get();
+                return view('dashboard')->with('users', $users);
             }
             $tasks = Task::where('user_id', Auth::id())->get();
             return view('tasks.index')->with('tasks', $tasks);
@@ -42,6 +44,7 @@ class TaskController extends Controller
     public function edit($task_id)
     {
         $task = Task::find($task_id);
+       
         return view('tasks.edit')->with('task', $task);
     }
 
@@ -62,4 +65,6 @@ class TaskController extends Controller
         $task->delete();
         return redirect()->route('tasks.index');
     }
+
+   
 }

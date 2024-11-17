@@ -20,7 +20,7 @@
                     <a class="nav-link" href="{{ route('tasks.index')}}">All Tasks</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Add Task</a>
+                    <a class="nav-link" href="{{ route('tasks.create')}}">Add Task</a>
                 </li>
                 <li class="nav-item">
                     <form method="POST" action="{{ route('logout') }}">
@@ -54,8 +54,6 @@
 
                 @foreach ($tasks as $task)
 
-
-
                 <tr>
                     <th scope="row">{{$task->task_id}}</th>
                     <td>{{$task->title}}</td>
@@ -65,7 +63,17 @@
 
 
                     <td><a href="{{ route('tasks.edit', $task->task_id) }}" class="btn btn-primary">Edit</a></td>
-                    <td><a href="{{ route('tasks.destroy', $task->task_id) }}" class="btn btn-danger">Delete</a></td>
+
+
+                    <td>
+                        <form method="POST" action="{{ route('tasks.destroy' , $task->task_id) }}">
+                            @csrf
+                            @method('DELETE')
+                            <a href="{{ route('tasks.destroy', $task->task_id) }}" class="btn btn-danger" onclick="event.preventDefault();
+                                                this.closest('form').submit();">Delete</a>
+                        </form>
+                    </td>
+
                 </tr>
                 @endforeach
             </tbody>

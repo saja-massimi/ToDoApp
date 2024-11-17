@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -19,9 +20,16 @@ Route::controller(TaskController::class)->middleware('auth')->name('tasks')->gro
     Route::delete('/tasks/{task}', 'destroy')->name('.destroy');
 });
 
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard/userTasks/{user_id}', [AdminController::class, 'userTasks'])->middleware(['auth', 'verified'])->name('dashboard.userTasks');
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
